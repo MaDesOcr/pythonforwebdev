@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-Do List</title>
+</head>
+
+<body>
+    <h1>To-Do List</h1>
+    <ul>
+        <!-- Loop through the tasks and display each task -->
+        {% for task in tasks %}
+        <li>
+            <!-- Checkbox to toggle completion status -->
+            <input type="checkbox" onchange="window.location.href='/toggle/{{ task['id'] }}'" {% if task['completed']
+                %}checked{% endif %}>
+            <!-- Style completed tasks differently -->
+            <span style="text-decoration: {% if task['completed'] %}line-through{% else %}none{% endif %};">
+                {{ task['description'] }}
+            </span>
+            <!-- Delete link -->
+            <a href="/delete/{{ task['id'] }}" style="color: red;">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <h2>Add a New Task</h2>
+    <form action="/add" method="post">
+        <input type="text" name="description" placeholder="Task description" required>
+        <button type="submit">Add Task</button>
+    </form>
+</body>
+
+</html>
